@@ -15,10 +15,9 @@ def stratify_datafile(filepath):
     
     df = df.groupby(["AudioMothCode", "hour"])\
            .apply(lambda x: x.sample(1))\
-           .reset_index(drop=True)
+           .drop(columns='hour')
     
     if df.size > 0:
-        df.drop(columns='hour')\
-          .to_csv(filepath.replace('.csv', '_stratified.csv'), index=False)
+        df.to_csv(filepath.replace('.csv', '_stratified.csv'), index=False)
         return True
     return False
